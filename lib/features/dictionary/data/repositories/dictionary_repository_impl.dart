@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:dictionary_app/core/error/failures.dart';
 import 'package:dictionary_app/core/network/network_info.dart';
-import 'package:dictionary_app/core/utils/constants.dart';
 import 'package:dictionary_app/features/dictionary/data/datasources/dictionary_remote_data_source.dart';
 import 'package:dictionary_app/features/dictionary/data/models/word_definition.dart';
 import 'package:dictionary_app/features/dictionary/domain/entities/word.dart';

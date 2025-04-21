@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../data/models/word_definition.dart';
 import '../bloc/dictionary_bloc.dart';
 import '../widgets/word_search_bar.dart';
 import '../widgets/word_definition_card.dart';

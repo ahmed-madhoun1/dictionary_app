@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dictionary_app/core/error/failures.dart';
 import 'package:dictionary_app/features/dictionary/domain/usecases/get_word_definition.dart';
 import '../../domain/entities/word.dart';
