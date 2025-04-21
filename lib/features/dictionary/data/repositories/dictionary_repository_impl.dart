@@ -27,15 +27,11 @@ class DictionaryRepositoryImpl implements DictionaryRepository {
       return Left(NetworkFailure());
     }
     try {
-      final result = await remoteDataSource.getWordDefinition(
-        word,
-        page,
-        pageSize,
-      );
+      final result = await remoteDataSource.getWordDefinition(word, page, pageSize,);
       if (result.statusCode != 200 || result.errors.isNotEmpty) {
         return Left(ServerFailure());
       }
-      return Right(_mapToDomain(result));
+      return Right(mapToDomain(result));
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         return Left(InvalidInputFailure());
@@ -46,22 +42,5 @@ class DictionaryRepositoryImpl implements DictionaryRepository {
     }
   }
 
-  PaginatedWords _mapToDomain(WordListResponse response) {
-    return PaginatedWords(
-      count: response.result.count,
-      next: response.result.next,
-      previous: response.result.previous,
-      words: response.result.results
-          .map((entry) => Word(
-        id: entry.id,
-        word: entry.word,
-        definition: entry.definition,
-        partOfSpeech: entry.partOfSpeech,
-        exampleSentences: entry.exampleSentences,
-        synonyms: entry.synonyms,
-        antonyms: entry.antonyms,
-      ))
-          .toList(),
-    );
-  }
+
 }

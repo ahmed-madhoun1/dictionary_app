@@ -5,13 +5,13 @@ import 'package:dictionary_app/features/dictionary/domain/entities/word.dart';
 import 'package:dictionary_app/features/dictionary/domain/repositories/dictionary_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class GetWordDefinition implements UseCase<PaginatedWords, WordDefinitionParams> {
+class GetWordDefinition implements UseCase<PaginatedWords, WordParams> {
   final DictionaryRepository repository;
 
   GetWordDefinition(this.repository);
 
   @override
-  Future<Either<Failure, PaginatedWords>> call(WordDefinitionParams params) async {
+  Future<Either<Failure, PaginatedWords>> call(WordParams params) async {
     return await repository.getWordDefinition(
       params.word,
       page: params.page,
@@ -20,12 +20,12 @@ class GetWordDefinition implements UseCase<PaginatedWords, WordDefinitionParams>
   }
 }
 
-class WordDefinitionParams extends Equatable {
+class WordParams extends Equatable {
   final String word;
   final int page;
   final int? pageSize;
 
-  const WordDefinitionParams({
+  const WordParams({
     required this.word,
     this.page = 1,
     this.pageSize,

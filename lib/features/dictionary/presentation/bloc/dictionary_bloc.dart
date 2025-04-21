@@ -9,7 +9,6 @@ part 'dictionary_event.dart';
 
 part 'dictionary_state.dart';
 
-/// Manages dictionary-related state and events.
 class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
   final GetWordDefinition getWordDefinition;
 
@@ -24,7 +23,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
     Emitter<DictionaryState> emit,
   ) async {
     emit(DictionaryLoading());
-    final result = await getWordDefinition(WordDefinitionParams(
+    final result = await getWordDefinition(WordParams(
       word: event.word,
       page: 1,
       pageSize: 10,
@@ -49,7 +48,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
   ) async {
     final currentState = state;
     if (currentState is DictionaryLoaded && !currentState.hasReachedEnd) {
-      final result = await getWordDefinition(WordDefinitionParams(
+      final result = await getWordDefinition(WordParams(
         word: currentState.word,
         page: currentState.currentPage + 1,
         pageSize: 10,

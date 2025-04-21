@@ -1,7 +1,7 @@
 import 'package:dictionary_app/features/dictionary/domain/entities/word.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../data/models/word_definition.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class WordDefinitionCard extends StatelessWidget {
   final Word wordEntry;
@@ -47,7 +47,8 @@ class WordDefinitionCard extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                    Theme.of(context).colorScheme.primaryContainer,
                   ),
               ],
             ),
@@ -55,7 +56,8 @@ class WordDefinitionCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.book, size: 20, color: Theme.of(context).colorScheme.secondary),
+                Icon(Icons.book,
+                    size: 20, color: Theme.of(context).colorScheme.secondary),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -73,11 +75,13 @@ class WordDefinitionCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.format_quote, size: 20, color: Theme.of(context).colorScheme.secondary),
+                  Icon(Icons.format_quote,
+                      size: 20, color: Theme.of(context).colorScheme.secondary),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Example: ${wordEntry.exampleSentences}',
+                      AppLocalizations.of(context).example +
+                          wordEntry.exampleSentences,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
@@ -87,11 +91,14 @@ class WordDefinitionCard extends StatelessWidget {
                   ),
                 ],
               ),
-            if (wordEntry.exampleSentences.isNotEmpty) const SizedBox(height: 12),
+            if (wordEntry.exampleSentences.isNotEmpty)
+              const SizedBox(height: 12),
             if (wordEntry.synonyms.isNotEmpty || wordEntry.antonyms.isNotEmpty)
               ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                childrenPadding: const EdgeInsets.symmetric(vertical: 8.0),
                 title: Text(
-                  'Synonyms & Antonyms',
+                  AppLocalizations.of(context).synonymsAndAntonyms,
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -99,70 +106,93 @@ class WordDefinitionCard extends StatelessWidget {
                   ),
                 ),
                 children: [
-                  if (wordEntry.synonyms.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(Icons.add_circle, size: 20, color: Theme.of(context).colorScheme.primary),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        if (wordEntry.synonyms.isNotEmpty)
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 16.0, top: 8.0),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Synonyms:',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  wordEntry.synonyms.join(', '),
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                Icon(Icons.add_circle,
+                                    size: 20,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context).synonyms,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        wordEntry.synonyms.join(', '),
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  if (wordEntry.antonyms.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(Icons.remove_circle, size: 20, color: Theme.of(context).colorScheme.error),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
+                        if (wordEntry.antonyms.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16.0, top: 8.0, bottom: 8.0),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Antonyms:',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  wordEntry.antonyms.join(', '),
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                Icon(Icons.remove_circle,
+                                    size: 20,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .error),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context).antonyms,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        wordEntry.antonyms.join(', '),
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
+                  ),
                 ],
               ),
           ],

@@ -1,7 +1,9 @@
 import 'package:dictionary_app/features/dictionary/domain/entities/word.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../data/models/word_definition.dart';
 import '../bloc/dictionary_bloc.dart';
 import '../widgets/word_search_bar.dart';
@@ -20,31 +22,39 @@ class DictionaryPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: WordSearchBar(
-            controller: TextEditingController(),
-            onSearch: (query) {
-              final trimmedWord = query.trim();
-              if (trimmedWord.isNotEmpty) {
-                pagingController.refresh();
-                context.read<DictionaryBloc>().add(GetWordDefinitionEvent(trimmedWord));
-              }
-            },
+        title: Text(
+          'Dictionary',
+          style: GoogleFonts.poppins(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            WordSearchBar(
+              controller: TextEditingController(),
+              onSearch: (query) {
+                final trimmedWord = query.trim();
+                if (trimmedWord.isNotEmpty) {
+                  pagingController.refresh();
+                  context
+                      .read<DictionaryBloc>()
+                      .add(GetWordDefinitionEvent(trimmedWord));
+                }
+              },
+            ),
             const SizedBox(height: 16),
             Expanded(
               child: BlocConsumer<DictionaryBloc, DictionaryState>(
                 listener: (context, state) {
                   if (state is DictionaryLoaded) {
                     if (state.allEntries.isEmpty) {
-                      pagingController.error = 'No results found';
+                      pagingController.error =
+                          AppLocalizations.of(context).noResultsFound;
                     } else {
                       pagingController.appendPage(
                         state.paginatedWords.words,
@@ -59,7 +69,9 @@ class DictionaryPage extends StatelessWidget {
                 },
                 builder: (context, state) {
                   if (state is DictionaryInitial) {
-                    return const Center(child: Text('Enter a word to search'));
+                    return Center(
+                        child: Text(
+                            AppLocalizations.of(context).enterAWordToSearch));
                   }
                   return PagedListView<int, Word>(
                     pagingController: pagingController,
@@ -71,8 +83,9 @@ class DictionaryPage extends StatelessWidget {
                       firstPageErrorIndicatorBuilder: (context) => Center(
                         child: Text(pagingController.error.toString()),
                       ),
-                      noItemsFoundIndicatorBuilder: (context) => const Center(
-                        child: Text('No results found'),
+                      noItemsFoundIndicatorBuilder: (context) => Center(
+                        child:
+                            Text(AppLocalizations.of(context).noResultsFound),
                       ),
                       firstPageProgressIndicatorBuilder: (context) =>
                           const Center(child: CircularProgressIndicator()),

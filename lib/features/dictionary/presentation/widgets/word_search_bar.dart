@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class WordSearchBar extends StatelessWidget {
   final TextEditingController controller;
 
@@ -14,15 +16,17 @@ class WordSearchBar extends StatelessWidget {
       controller: controller,
       style: GoogleFonts.poppins(color: Colors.black),
       decoration: InputDecoration(
-        hintText: 'Search for a word',
+        hintText: AppLocalizations.of(context).searchHint,
         hintStyle: GoogleFonts.poppins(color: Colors.grey),
-        prefixIcon: const Icon(Icons.search),
         suffixIcon: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
               icon: const Icon(Icons.search),
-              onPressed: () => onSearch(controller.text),
+              onPressed: () => {
+                onSearch(controller.text),
+                FocusScope.of(context).unfocus(),
+              },
             ),
           ],
         ),
@@ -33,7 +37,10 @@ class WordSearchBar extends StatelessWidget {
         filled: true,
         fillColor: Colors.grey[200],
       ),
-      onSubmitted: (word) => onSearch(word),
+      onSubmitted: (word) => {
+        onSearch(word),
+        FocusScope.of(context).unfocus(),
+      },
     );
   }
 }

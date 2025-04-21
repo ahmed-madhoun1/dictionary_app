@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../domain/entities/word.dart';
+
 part '../../data/models/word_definition.g.dart';
 
 @JsonSerializable()
@@ -88,4 +90,23 @@ class WordEntry extends Equatable {
     synonyms,
     antonyms
   ];
+}
+
+PaginatedWords mapToDomain(WordListResponse response) {
+  return PaginatedWords(
+    count: response.result.count,
+    next: response.result.next,
+    previous: response.result.previous,
+    words: response.result.results
+        .map((entry) => Word(
+      id: entry.id,
+      word: entry.word,
+      definition: entry.definition,
+      partOfSpeech: entry.partOfSpeech,
+      exampleSentences: entry.exampleSentences,
+      synonyms: entry.synonyms,
+      antonyms: entry.antonyms,
+    ))
+        .toList(),
+  );
 }
